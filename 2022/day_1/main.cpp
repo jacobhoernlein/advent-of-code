@@ -1,6 +1,7 @@
-#include <iostream>
+#include <algorithm>
 #include <fstream>
-#include <queue>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -10,8 +11,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    priority_queue<int> calHeap;
-    int elf1, elf2, elf3, curCals = 0;
+    vector<int> elvesCals;
+    int maxElfCals = 0, curElfCals = 0, sum = 0;
 
     ifstream file;
     string line;
@@ -23,20 +24,25 @@ int main(int argc, char* argv[]) {
     }
     while (getline(file, line)) {
         try {
-            curCals += stoi(line);
+            curElfCals += stoi(line);
         } catch (invalid_argument) { // Thrown when empty line is reached.
-            calHeap.push(curCals);
-            curCals = 0;
+            maxElfCals = (maxElfCals < curElfCals) ? curElfCals : maxElfCals;
+            
+            elvesCals.push_back(curElfCals);
+            curElfCals = 0;
         }
     }
     file.close();
 
-    elf1 = calHeap.top(); calHeap.pop();
-    elf2 = calHeap.top(); calHeap.pop();
-    elf3 = calHeap.top();
+    // Part 1 operates in O(N) time, where N is the number of lines in the file.
+    cout << "Part 1: " << maxElfCals << endl;
 
-    cout << "Part 1: " << elf1 << endl;
-    cout << "Part 2: " << elf1 + elf2 + elf3 << endl;
+    // Part 2 operates in O(NlogN) time, since std::sort is NlogN complexity.
+    sort(elvesCals.begin(), elvesCals.end());
+    for (int i = 0; i < 3; i++) {
+        sum += elvesCals.back(); elvesCals.pop_back();
+    }
+    cout << "Part 2: " << sum << endl;
 
     return 0;
 }

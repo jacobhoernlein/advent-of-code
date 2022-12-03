@@ -1,17 +1,23 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <unordered_set>
 #include <vector>
 
 using namespace std;
 
+// Number of elves per group.
+const int NUM_ELVES = 3;
+
 int getVal_pt1(const string &line) {
     unordered_set<char> compartment1;
     int i;
 
+    // Adds characters of first compartment to set.
     for (i = 0; i < line.length() / 2; i++) {
         compartment1.insert(line[i]);
     }
+    // Returns value of first character in second compartment
+    // That is also in the first compartment.
     for (; i < line.length(); i++) {
         if (compartment1.find(line[i]) != compartment1.end()) {
             char c = line[i];
@@ -28,18 +34,26 @@ int getVal_pt1(const string &line) {
 }
 
 int getVal_pt2(const vector<string> &elves) {
-    unordered_set<char> elf1, elf2;
-
+    vector<unordered_set<char>> shared(elves.size() - 1);
+    
+    // Adds unique chars to first set in vector.
     for (char c : elves.at(0)) {
-        elf1.insert(c);
-    }
-    for (char c : elves.at(1)) {
-        if (elf1.find(c) != elf1.end() && elf2.find(c) == elf2.end()) {
-            elf2.insert(c);
+        if (shared.at(0).find(c) == shared.at(0).end()) {
+            shared.at(0).insert(c);
         }
     }
-    for (char c : elves.at(2)) {
-        if (elf2.find(c) != elf2.end()) {
+    // Adds shared characters between current string and
+    // previous string to current set in vector. 
+    for (int i = 1; i < shared.size(); i++) {
+        for (char c : elves.at(i)) {
+            if (shared.at(i - 1).find(c) != shared.at(i - 1).end()) {
+                shared.at(i).insert(c);
+            }
+        }
+    }
+    // For the last string, returns value of first character shared.
+    for (char c : elves.back()) {
+        if (shared.back().find(c) != shared.back().end()) {
             if (c >= 'a' && c <= 'z') {
                 return c - 'a' + 1;
             }
@@ -48,8 +62,7 @@ int getVal_pt2(const vector<string> &elves) {
             }
         }
     }
-
-    return ' ';
+    return 0;
 }
 
 int main(int argc, char* argv[]) {
@@ -59,7 +72,7 @@ int main(int argc, char* argv[]) {
     }
     
     int sum_pt1 = 0, sum_pt2 = 0, i = 0;
-    vector<string> elves(3);
+    vector<string> elves(NUM_ELVES);
 
     ifstream file;
     string line;
@@ -71,14 +84,15 @@ int main(int argc, char* argv[]) {
     }
     while (getline(file, line)) {        
         sum_pt1 += getVal_pt1(line);
-        elves.at(i++) = line;
-        if (i == 3) {
+        elves.at(i++ % NUM_ELVES) = line;
+        if (i % NUM_ELVES == 0) {
             sum_pt2 += getVal_pt2(elves);
-            i = 0;
         }
     }
     file.close();
 
+    // Both algorithms operate in O(N) time,
+    // Where N is the size of the input file.
     cout << "Part 1: " << sum_pt1 << endl;
     cout << "Part 2: " << sum_pt2 << endl;
 
