@@ -1,3 +1,3 @@
 # advent-of-code
 
-Code I write for annual Advents of Code.
+Programs written for annual Advent of Code puzzles.
