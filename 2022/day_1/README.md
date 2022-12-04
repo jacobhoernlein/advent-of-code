@@ -1,5 +1,8 @@
 # --- Day 1: Calorie Counting ---
 
+## The Problem
+
+### --- Part One ---
 Santa's reindeer typically eat regular reindeer food, but they need a lot of magical energy to deliver presents on Christmas. For that, their favorite snack is a special type of star fruit that only grows deep in the jungle. The Elves have brought you on their annual expedition to the grove where the fruit grows.
 
 To supply enough magical energy, the expedition needs to retrieve a minimum of fifty stars by December 25th. Although the Elves assure you that the grove has plenty of fruit, you decide to grab any fruit you see along the way, just in case.
@@ -39,8 +42,7 @@ In case the Elves get hungry and need extra snacks, they need to know which Elf 
 
 Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
 
-## --- Part Two ---
-
+### --- Part Two ---
 By the time you calculate the answer to the Elves' question, they've already realized that the Elf carrying the most Calories of food might eventually run out of snacks.
 
 To avoid this unacceptable situation, the Elves would instead like to know the total Calories carried by the top three Elves carrying the most Calories. That way, even if one of those Elves runs out of snacks, they still have two backups.
@@ -48,3 +50,13 @@ To avoid this unacceptable situation, the Elves would instead like to know the t
 In the example above, the top three Elves are the fourth Elf (with 24000 Calories), then the third Elf (with 11000 Calories), then the fifth Elf (with 10000 Calories). The sum of the Calories carried by these three elves is 45000.
 
 Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?
+
+## The Solution
+
+### --- Part One ---
+My first thought was to use a max heap to keep track of the number of calories the elf with the most calories has. This would lead to an $O(nlog(n))$ time complexity, where $n$ is the number of lines in the program, since in the worst case each elf could only have one line associated with it, and inserting into a max heap takes $O(log(n))$ time. 
+
+I then realized that I didn't have to use a heap at all. Instead, for part one, I could just use a variable to keep track of the elf with the most calories, and check if the current elf was more than that for each elf. This turned an $O(nlog(n))$ algorithm into an linear-time algorithm.
+
+### --- Part Two ---
+I could've scaled the same approach for part one and used three variables to keep track of the top three elves, but I wanted some scalability. Instead, I used a vector of integers, and appended a value for each elf. I then sorted the vector, and summed the back three elements. This algorithm retains the $O(nlog(n))$ time complexity of my first thought, but it gains the benefit of scalability. 

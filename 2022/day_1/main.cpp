@@ -34,14 +34,12 @@ int main(int argc, char* argv[]) {
     }
     file.close();
 
-    // Part 1 operates in O(N) time, where N is the number of lines in the file.
-    cout << "Part 1: " << maxElfCals << endl;
-
-    // Part 2 operates in O(NlogN) time, since std::sort is NlogN complexity.
     sort(elvesCals.begin(), elvesCals.end());
     for (int i = 0; i < 3; i++) {
         sum += elvesCals.back(); elvesCals.pop_back();
     }
+
+    cout << "Part 1: " << maxElfCals << endl;
     cout << "Part 2: " << sum << endl;
 
     return 0;

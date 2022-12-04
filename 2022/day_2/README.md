@@ -1,5 +1,8 @@
 # --- Day 2: Rock Paper Scissors ---
 
+## The Problem
+
+### --- Part One ---
 The Elves begin to set up camp on the beach. To decide whose tent gets to be closest to the snack storage, a giant Rock Paper Scissors tournament is already in progress.
 
 Rock Paper Scissors is a game between two players. Each game contains many rounds; in each round, the players each simultaneously choose one of Rock, Paper, or Scissors using a hand shape. Then, a winner for that round is selected: Rock defeats Scissors, Scissors defeats Paper, and Paper defeats Rock. If both players choose the same shape, the round instead ends in a draw.
@@ -28,8 +31,7 @@ In this example, if you were to follow the strategy guide, you would get a total
 
 What would your total score be if everything goes exactly according to your strategy guide?
 
-## --- Part Two ---
-
+### --- Part Two ---
 The Elf finishes helping with the tent and sneaks back over to you. "Anyway, the second column says how the round needs to end: X means you need to lose, Y means you need to end the round in a draw, and Z means you need to win. Good luck!"
 
 The total score is still calculated in the same way, but now you need to figure out what shape to choose so the round ends as indicated. The example above now goes like this:
@@ -40,3 +42,10 @@ The total score is still calculated in the same way, but now you need to figure 
 Now that you're correctly decrypting the ultra top secret strategy guide, you would get a total score of 12.
 
 Following the Elf's instructions for the second column, what would your total score be if everything goes exactly according to your strategy guide?
+
+## The Solution
+One way of doing solving this problem would be to match a given line with a set of all possible combinations for a round, and returning the value for that round. However, that algorithm would either need to implement a hash table, or if it did not implement a hash table, it would suffer from linear time complexity. 
+
+Instead, my two functions used characters as inputs, and multiple switch statements to find the proper return value. In the case that one of the inputs is faulty, a `std::invalid_argument` exception is thrown.
+
+This approach may not be the most maintainable, but it is much faster (operating in constant time) and takes up much less space than the other approach.

@@ -1,5 +1,8 @@
 # --- Day 3: Rucksack Reorganization ---
 
+## The Problem
+
+### --- Part One ---
 One Elf has the important job of loading all of the rucksacks with supplies for the jungle journey. Unfortunately, that Elf didn't quite follow the packing instructions, and so a few items now need to be rearranged.
 
 Each rucksack has two large compartments. All items of a given type are meant to go into exactly one of the two compartments. The Elf that did the packing failed to follow this rule for exactly one item type per rucksack.
@@ -33,8 +36,7 @@ In the above example, the priority of the item type that appears in both compart
 
 Find the item type that appears in both compartments of each rucksack. What is the sum of the priorities of those item types?
 
-## --- Part Two ---
-
+### --- Part Two ---
 As you finish identifying the misplaced items, the Elves come to you with another issue.
 
 For safety, the Elves are divided into groups of three. Every Elf carries a badge that identifies their group. For efficiency, within each group of three Elves, the badge is the only item type carried by all three Elves. That is, if a group's badge is item type B, then all three Elves will have item type B somewhere in their rucksack, and at most two of the Elves will be carrying any other item type.
@@ -62,3 +64,13 @@ In the first group, the only item type that appears in all three rucksacks is lo
 Priorities for these items must still be found to organize the sticker attachment efforts: here, they are 18 (r) for the first group and 52 (Z) for the second group. The sum of these is 70.
 
 Find the item type that corresponds to the badges of each three-Elf group. What is the sum of the priorities of those item types?
+
+## The Solution
+
+### --- Part One ---
+Linearly searching through the first substring for each character in the second substring is a valid, but naiive approach to this problem. This would lead to a time complexity of $O(n^2)$ for the program, where $n$ is the size of the input file (each call to the `getVal` function would be in $O(n^2)$ time where $n$ is the length of the string, but the function is called for each line, so the total complexity averages to $O(n^2)$).
+
+Instead, I created a set of unique characters for the first half of each string. Then for each character in the second have of each string, I checked if it was in the first half. Since inserting and searching `std::unordered_set` amortizes to constant time, the complexity of this algorithm is $O(n)$. Then, since it is called for each line in the input file, the overall complexity is $O(n)$, where $n$ is the size of the input file.
+
+### --- Part Two ---
+Similar to the solution on day one, I wanted some scalability with my solution. So, instead of defining a set number of `std::unordered_set`s, I created a vector of sets with a size equal to the number of strings in the input vector, minus one. For the first set, I inserted every unique character in the first string. For every other string except for the last one, I inserted shared characters into the set. Then, for the last string in the input vector, I search through each character in the string and return the value of the first character in the previous set. If there are no shared characters, 0 is returned. Like with part one, this operates in linear time based on the total number of characters in all of the strings of the input vectors. This leads to an overall complexity of $O(n)$ for the program, for input filesize $n$.
