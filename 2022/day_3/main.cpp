@@ -91,8 +91,6 @@ int main(int argc, char* argv[]) {
     }
     file.close();
 
-    // Both algorithms operate in O(N) time,
-    // Where N is the size of the input file.
     cout << "Part 1: " << sum_pt1 << endl;
     cout << "Part 2: " << sum_pt2 << endl;
 
