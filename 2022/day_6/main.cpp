@@ -9,7 +9,7 @@ int findRepeating(const string &input, const int s) {
     bool allUnique;
 
     for (int p = 0; true; p++) {
-        chars = {};
+        chars.clear();
         allUnique = true;
         
         for (int i = 0; i < s; i++) {
