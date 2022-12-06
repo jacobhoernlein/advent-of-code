@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     while (getline(file, line)) {
         try {
             curElfCals += stoi(line);
-        } catch (invalid_argument) { // Thrown when empty line is reached.
+        } catch (invalid_argument &e) { // Thrown when empty line is reached.
             maxElfCals = (maxElfCals < curElfCals) ? curElfCals : maxElfCals;
             
             elvesCals.push_back(curElfCals);
