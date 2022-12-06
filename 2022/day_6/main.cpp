@@ -8,22 +8,25 @@ int findRepeating(const string &input, const int s) {
     unordered_set<char> chars;
     bool allUnique;
 
-    for (int p = 0; p <= input.size() - s; p++) {
+    for (int p = 0; true; p++) {
         chars = {};
         allUnique = true;
         
         for (int i = 0; i < s; i++) {
-            if (chars.find(input[p + i]) != chars.end()) {
-                allUnique = false;
-                break;
+            try {
+                if (chars.find(input.at(p + i)) != chars.end()) {
+                    allUnique = false;
+                    break;
+                }
+                else chars.insert(input.at(p + i));
+            } catch (out_of_range &e) {
+                return -1;
             }
-            else chars.insert(input[p + i]);
         }
         if (allUnique) {
-            return p + s;
+            return p + s - 1;
         }
     }
-    return -1;
 }
 
 int main(int argc, char* argv[]) {
@@ -43,8 +46,8 @@ int main(int argc, char* argv[]) {
     file >> input;
     file.close();
 
-    cout << "Part 1: " << findRepeating(input, 4) << endl;
-    cout << "Part 2: " << findRepeating(input, 14) << endl;
+    cout << "Part 1: " << findRepeating(input, 4) + 1 << endl;
+    cout << "Part 2: " << findRepeating(input, 14) + 1 << endl;
 
     return 0;
 }
