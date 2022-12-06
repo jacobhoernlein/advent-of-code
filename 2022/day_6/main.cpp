@@ -8,7 +8,7 @@ int findRepeating(const string &input, const int s) {
     unordered_set<char> chars;
     bool allUnique;
 
-    for (int p = 0; p < input.size() - s; p++) {
+    for (int p = 0; p <= input.size() - s; p++) {
         chars = {};
         allUnique = true;
         
