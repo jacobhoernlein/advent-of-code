@@ -5,20 +5,19 @@
 using namespace std;
 
 int findRepeating(const string &input, const int s) {
-    string subStr;
     unordered_set<char> chars;
     bool allUnique;
 
     for (int p = 0; p < input.size() - s; p++) {
         chars = {};
-        subStr = input.substr(p, s);
         allUnique = true;
-        for (char c : subStr) {
-            if (chars.find(c) != chars.end()) {
+        
+        for (int i = 0; i < s; i++) {
+            if (chars.find(input[p + i]) != chars.end()) {
                 allUnique = false;
                 break;
             }
-            else chars.insert(c);
+            else chars.insert(input[p + i]);
         }
         if (allUnique) {
             return p + s;
