@@ -1,6 +1,6 @@
-#include <fstream>
 #include <iostream>
 #include <unordered_map>
+#include "getlines.h"
 
 using namespace std;
 
@@ -80,28 +80,12 @@ void cd(Directory* &curDir, string dirName) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        cout << "Supply input file." << endl;
-        return 1;
-    }
-    
-    ifstream file;
-    string line;
-
     Directory* curDir = new Directory(nullptr);
 
-    file.open(argv[1]);
-    if (!file.is_open()) {
-        cout << "Invalid input file." << endl;
-        return 2;
-    }
-    while (getline(file, line)) {
-        // We can ignore the ls command, and instead directly add lines
-        // to the current directory if it doesn't start with $.
+    for (string line : getlines(argc, argv)) {
         if (line.substr(0, 4) == "$ cd") cd(curDir, line.substr(5));
         else if (line.front() != '$') curDir->add(line);
     }
-    file.close();
 
     cd(curDir, "/");
     const int neededSpace = 30000000 - (70000000 - curDir->getSize());

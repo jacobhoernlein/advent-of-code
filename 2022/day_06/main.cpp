@@ -1,6 +1,6 @@
-#include <fstream>
 #include <iostream>
 #include <unordered_set>
+#include "getlines.h"
 
 using namespace std;
 
@@ -27,21 +27,7 @@ int findNonRepeating(T *begin, T *end, int s) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        cout<< "Supply input file." << endl;
-        return 1;
-    }
-    
-    ifstream file;
-    string input;
-
-    file.open(argv[1]);
-    if (!file.is_open()) {
-        cout << "Invalid input file." << endl;
-        return 2;
-    }
-    file >> input;
-    file.close();
+    string input = getlines(argc, argv).front();
 
     cout << "Part 1: " << findNonRepeating(&input.front(), &input.back(), 4) + 1 << "\n";
     cout << "Part 2: " << findNonRepeating(&input.front(), &input.back(), 14) + 1 << endl;

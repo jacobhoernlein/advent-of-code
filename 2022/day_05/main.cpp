@@ -1,7 +1,6 @@
-#include <fstream>
 #include <iostream>
 #include <sstream>
-#include <vector>
+#include "getlines.h"
 
 using namespace std;
 
@@ -40,14 +39,6 @@ void moveBoxes_pt2(vector<vector<char>> &stacks, const string &line) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        cout << "Supply input file." << endl;
-        return 1;
-    }
-    
-    ifstream file;
-    string line;
-
     vector<vector<char>> stacks1 = {
         {'W', 'R', 'F'},
         {'T', 'H', 'M', 'C', 'D', 'V', 'W', 'P'},
@@ -71,16 +62,10 @@ int main(int argc, char* argv[]) {
         {'J', 'W', 'H', 'G', 'R', 'S', 'V'}
     };
 
-    file.open(argv[1]);
-    if (!file.is_open()) {
-        cout << "Invalid input file." << endl;
-        return 2;
-    }
-    while (getline(file, line)) {        
+    for (string line : getlines(argc, argv)) {
         moveBoxes_pt1(stacks1, line);
         moveBoxes_pt2(stacks2, line);
     }
-    file.close();
 
     cout << "Part 1: ";
     for (int i = 0; i < 9; i++) {

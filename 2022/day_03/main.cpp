@@ -1,7 +1,6 @@
-#include <fstream>
 #include <iostream>
 #include <unordered_set>
-#include <vector>
+#include "getlines.h"
 
 using namespace std;
 
@@ -66,30 +65,16 @@ int getVal_pt2(const vector<string> &elves) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        cout << "Supply input file." << endl;
-        return 1;
-    }
-    
     int sum_pt1 = 0, sum_pt2 = 0, i = 0;
     vector<string> elves(NUM_ELVES);
 
-    ifstream file;
-    string line;
-
-    file.open(argv[1]);
-    if (!file.is_open()) {
-        cout << "Invalid input file." << endl;
-        return 2;
-    }
-    while (getline(file, line)) {        
+    for (string line : getlines(argc, argv)) {
         sum_pt1 += getVal_pt1(line);
         elves.at(i++ % NUM_ELVES) = line;
         if (i % NUM_ELVES == 0) {
             sum_pt2 += getVal_pt2(elves);
         }
     }
-    file.close();
 
     cout << "Part 1: " << sum_pt1 << endl;
     cout << "Part 2: " << sum_pt2 << endl;

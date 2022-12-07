@@ -1,6 +1,6 @@
-#include <fstream>
 #include <iostream>
 #include <sstream>
+#include "getlines.h"
 
 using namespace std;
 
@@ -71,31 +71,17 @@ int getScore_pt2(char elf, char me) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        cout << "Supply input file." << endl;
-        return 1;
-    }
-    
     int score_pt1 = 0, score_pt2 = 0;
     char elf, me;
-
-    ifstream file;
-    string line;
     stringstream ss;
     
-    file.open(argv[1]);
-    if (!file.is_open()) {
-        cout << "Invalid input file." << endl;
-        return 2;
-    }
-    while (getline(file, line)) {
+    for (string line : getlines(argc, argv)) {
         ss.str(line);
         ss >> elf >> me;
 
         score_pt1 += getScore_pt1(elf, me);
         score_pt2 += getScore_pt2(elf, me);
     }
-    file.close();
 
     cout << "Part 1: " << score_pt1 << endl;
     cout << "Part 2: " << score_pt2 << endl;

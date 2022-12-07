@@ -1,7 +1,6 @@
-#include <fstream>
 #include <iostream>
 #include <sstream>
-#include <vector>
+#include "getlines.h"
 
 using namespace std;
 
@@ -20,26 +19,12 @@ int overlap(const string &s) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        cout << "Supply input file." << endl;
-        return 1;
-    }
-    
-    ifstream file;
-    string line;
-
     int sum1 = 0, sum2 = 0;
-
-    file.open(argv[1]);
-    if (!file.is_open()) {
-        cout << "Invalid input file." << endl;
-        return 2;
-    }
-    while (getline(file, line)) {        
+    
+    for (string line : getlines(argc, argv)) {        
         sum1 += encapsulation(line);
         sum2 += overlap(line);
     }
-    file.close();
 
     cout << "Part 1: " << sum1 << endl;
     cout << "Part 2: " << sum2 << endl;

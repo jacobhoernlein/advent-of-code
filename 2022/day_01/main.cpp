@@ -1,28 +1,14 @@
 #include <algorithm>
-#include <fstream>
 #include <iostream>
-#include <vector>
+#include "getlines.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        cout << "Supply input file." << endl;
-        return 1;
-    }
-    
     vector<int> elvesCals;
     int maxElfCals = 0, curElfCals = 0, sum = 0;
-
-    ifstream file;
-    string line;
     
-    file.open(argv[1]);
-    if (!file.is_open()) {
-        cout << "Invalid input file." << endl;
-        return 2;
-    }
-    while (getline(file, line)) {
+    for (string line : getlines(argc, argv)) {
         try {
             curElfCals += stoi(line);
         } catch (invalid_argument &e) { // Thrown when empty line is reached.
@@ -32,7 +18,6 @@ int main(int argc, char* argv[]) {
             curElfCals = 0;
         }
     }
-    file.close();
 
     sort(elvesCals.begin(), elvesCals.end());
     for (int i = 0; i < 3; i++) {
