@@ -56,4 +56,4 @@ This part was the same as the last part, except the length of the substring had 
 
 I also modified the function a bit after my initial submission, because I'm a bit of a perfectionist. I changed the function even more to not use another string variable at all. I instead created an inner loop with another index variable and tried referencing the input string at index `p + i`. If a `std::out_of_range` exception was thrown, I knew that the end of the input string had been reached without finding a non-repeating substring, so I returned -1. 
 
-I then came back again and wrote the same function using iteratbles and templates. This way, it could be used on any object with an iterator.
+I then came back again and wrote the same function using iteratbles and templates. This way, it could be used on any object with an iterator. Then, I thought that the template looked ugly, so I instead used pointers. As a result, it can only be used on data structures in which the values lie on consecutive memory spaces, such as c strings, arrays, vectors, and `std::string`s.
