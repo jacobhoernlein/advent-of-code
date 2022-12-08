@@ -1,6 +1,7 @@
 #ifndef GETLINES_H_
 #define GETLINES_H_
 
+#include <string>
 #include <vector>
 
 /** Get the lines of the file named in argv[1] as a vector.
