@@ -1,19 +1,18 @@
-#include <string>
+#ifndef ROPE_H_
+#define ROPE_H_
+
 #include <unordered_set>
 #include <utility>
 #include <vector>
+#include "jmch/hashpair.h"
 
 class Rope {
-    std::pair<int, int> head;
-    std::vector<std::pair<int, int>> tail;
-    
-    std::unordered_set<std::string> visitedPoints;
+    std::vector<std::pair<int, int>> knots;
+    std::unordered_set<std::pair<int, int>, hash_pair> visitedPoints;
 public:
-    // Initialize rope with given length.
-    Rope(int length);
-    
-    // Move head of the rope as directed. Also moves the tail.
-    void moveHead(char direction, int count);
-    // Return the number of distinct points visited by the end of the rope.
-    int getVisitedPoints();
+    Rope(int length);    
+    void move(char direction, int count);
+    int countVisitedPoints() const;
 };
+
+#endif

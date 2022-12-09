@@ -1,6 +1,6 @@
 #include <iostream>
 #include <sstream>
-#include "getlines.h"
+#include "jmch/getlines.h"
 
 using namespace std;
 

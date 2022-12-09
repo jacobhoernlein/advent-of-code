@@ -699,3 +699,5 @@ Tonight's problem might have seemed scary at first, but like most nights, it boi
 
 ### --- Part Two ---
 For part two, I generalized my class to work with tails of any length. I did this by moving the tail-moving logic to its own void function, that moved any knot with respect to the knot before it. Then, I looped over every knot in the rope. In my main function, I created two Ropes, one with length 1, and the other with length 9. Then, for each line of input, I moved each Rope accordingly.
+
+I came back the next day after already submitting my answers and revised my `Rope` class a little bit to move all of the knots in the rope into one vector rather than having a seperate pair for just the head. Then, I found a hash function for pairs and included that rather than converting the pairs to a string.

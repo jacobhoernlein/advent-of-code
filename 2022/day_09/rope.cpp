@@ -1,14 +1,9 @@
-#include <sstream>
 #include "rope.h"
 
 using namespace std;
 
 Rope::Rope(int length) {
-    head.first = 0;
-    head.second = 0;
-    
-    if (length < 1) length = 1;
-    tail = vector(length, pair(0, 0));
+    knots = vector(length, pair(0, 0));
 }
 
 // Moves the slave based on how far away the master is.
@@ -26,31 +21,25 @@ void moveKnot(pair<int, int> &master, pair<int, int> &slave) {
     }
 }
 
-void Rope::moveHead(char direction, int count) {
+void Rope::move(char direction, int count) {
     for (int i = 0; i < count; i++) {
         // Move the head to the proper direction.
-        if (direction == 'R') head.first++;
-        if (direction == 'L') head.first--;
-        if (direction == 'U') head.second++;
-        if (direction == 'D') head.second--;
+        if (direction == 'R') knots.front().first++;
+        if (direction == 'L') knots.front().first--;
+        if (direction == 'U') knots.front().second++;
+        if (direction == 'D') knots.front().second--;
         
-        // Move the first knot of the tail.
-        moveKnot(head, tail.front());
-        
-        // Move the rest of the knots.
+        // Move each of the following knots.
         vector<pair<int, int>>::iterator it;
-        for (it = tail.begin() + 1; it < tail.end(); it++) {
-            moveKnot(*(it - 1), *it);
+        for (it = knots.begin(); it < knots.end() - 1; it++) {
+            moveKnot(*it, *(it + 1));
         }
 
-        // Add the current point the tail is at to the set.
-        stringstream ss;
-        ss << tail.back().first << " " << tail.back().second;
-        visitedPoints.insert(ss.str());
-        ss.clear();
+        // Add the position of the last knot.
+        visitedPoints.insert(knots.back());
     }
 }
 
-int Rope::getVisitedPoints() {
+int Rope::countVisitedPoints() const {
     return visitedPoints.size();
 }
