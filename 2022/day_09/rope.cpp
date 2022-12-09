@@ -2,10 +2,6 @@
 
 using namespace std;
 
-Rope::Rope(int length) {
-    knots = vector(length, pair(0, 0));
-}
-
 // Moves the slave based on how far away the master is.
 void moveKnot(pair<int, int> &master, pair<int, int> &slave) {
     int dx = master.first - slave.first;
@@ -21,13 +17,20 @@ void moveKnot(pair<int, int> &master, pair<int, int> &slave) {
     }
 }
 
+Rope::Rope(int length) {
+    knots = vector(length, pair(0, 0));
+}
+
 void Rope::move(char direction, int count) {
+    // If direction is L or R, modify first element of head. Else second.
+    // If direction is R or U, increase that element. Else decrease.
+    int &headElement = (direction == 'L' || direction == 'R') ?
+        knots.front().first : knots.front().second;
+    const int change = (direction == 'R' || direction == 'U') ?
+        1 : -1;
+    
     for (int i = 0; i < count; i++) {
-        // Move the head to the proper direction.
-        if (direction == 'R') knots.front().first++;
-        if (direction == 'L') knots.front().first--;
-        if (direction == 'U') knots.front().second++;
-        if (direction == 'D') knots.front().second--;
+        headElement += change;
         
         // Move each of the following knots.
         vector<pair<int, int>>::iterator it;

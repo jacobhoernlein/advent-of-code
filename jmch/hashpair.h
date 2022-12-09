@@ -1,9 +1,9 @@
 #ifndef HASHPAIR_H_
 #define HASHPAIR_H_
 
-#include<functional>
+#include <functional>
 
-// Hashes a std::pair. Stolen from geeksforgeeks.
+// Hashes a std::pair. Modified from geeksforgeeks.
 struct hash_pair {
     template <class T1, class T2>
     std::size_t operator()(const std::pair<T1, T2>& p) const {
@@ -11,6 +11,7 @@ struct hash_pair {
         std::size_t hash2 = std::hash<T2>{}(p.second);
 
         if (hash1 != hash2) {
+            // Bitwise XOR of two hashes.
             return hash1 ^ hash2;
         }
 
