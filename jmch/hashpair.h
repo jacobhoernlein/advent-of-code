@@ -1,7 +1,7 @@
 #ifndef HASHPAIR_H_
 #define HASHPAIR_H_
 
-#include<unordered_set> // Implies <utility>
+#include<functional>
 
 // Hashes a std::pair. Stolen from geeksforgeeks.
 struct hash_pair {

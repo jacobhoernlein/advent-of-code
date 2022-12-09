@@ -1,8 +1,9 @@
 #ifndef ROPE_H_
 #define ROPE_H_
 
+#include <unordered_set>
 #include <vector>
-#include "jmch/hashpair.h" // Implies <unordered_set>
+#include "jmch/hashpair.h"
 
 class Rope {
     std::vector<std::pair<int, int>> knots;
