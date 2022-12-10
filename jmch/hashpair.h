@@ -9,14 +9,8 @@ struct hash_pair {
     std::size_t operator()(const std::pair<T1, T2>& p) const {
         std::size_t hash1 = std::hash<T1>{}(p.first);
         std::size_t hash2 = std::hash<T2>{}(p.second);
-
-        if (hash1 != hash2) {
-            // Bitwise XOR of two hashes.
-            return hash1 ^ hash2;
-        }
-
-        // If hash1 == hash2, their XOR is zero.
-        return hash1;
+        // Return bitwise XOR of hashes.
+        return (hash1 == hash2) ? hash1 : hash1 ^ hash2;
     }
 };
 
