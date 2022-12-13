@@ -4,35 +4,35 @@
 
 using namespace std;
 
-int monkey0op(int old) {
+u_int64_t monkey0op(u_int64_t old) {
     return old * 17;
 }
 
-int monkey1op(int old) {
+u_int64_t monkey1op(u_int64_t old) {
     return old + 8;
 }
 
-int monkey2op(int old) {
+u_int64_t monkey2op(u_int64_t old) {
     return old + 6;
 }
 
-int monkey3op(int old) {
+u_int64_t monkey3op(u_int64_t old) {
     return old * 19;
 }
 
-int monkey4op(int old) {
+u_int64_t monkey4op(u_int64_t old) {
     return old + 7;
 }
 
-int monkey5op(int old) {
+u_int64_t monkey5op(u_int64_t old) {
     return old * old;
 }
 
-int monkey6op(int old) {
+u_int64_t monkey6op(u_int64_t old) {
     return old + 1;
 }
 
-int monkey7op(int old) {
+u_int64_t monkey7op(u_int64_t old) {
     return old + 2;
 }
 

@@ -2,8 +2,8 @@
 
 using namespace std;
 
-Monkey::Monkey(const vector<int> &startingItems, function<int(int)> operation, int divisor, int trueDestDif, int falseDestDif) {
-    for (int element : startingItems) {
+Monkey::Monkey(const std::vector<u_int64_t> &startingItems, std::function<u_int64_t(u_int64_t)> operation, int divisor, int trueDestDif, int falseDestDif) {
+    for (u_int64_t element : startingItems) {
         this->items.push(element);
     }
     this->numInspected = 0;
@@ -30,8 +30,8 @@ void Monkey::lookAtItems_pt2() {
     while (!items.empty()) {
         numInspected++;
         curItem = items.front(); items.pop();
-        curItem = operation(curItem);
-        (this + ((curItem % divisor == 0) ? trueDestDif : falseDestDif))->items.push(curItem % 9699690);
+        curItem = operation(curItem) % 9699690;
+        (this + ((curItem % divisor == 0) ? trueDestDif : falseDestDif))->items.push(curItem);
     }
 }
 

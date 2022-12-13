@@ -6,16 +6,16 @@
 #include <vector>
 
 class Monkey {
-    std::queue<int> items;
+    std::queue<u_int64_t> items;
     int numInspected;
 
-    std::function<int(int)> operation;
+    std::function<u_int64_t(u_int64_t)> operation;
     int divisor;
 
     int trueDestDif;
     int falseDestDif;
 public:
-    Monkey(const std::vector<int> &startingItems, std::function<int(int)> operation, int divisor, int trueDestDif, int falseDestDif);
+    Monkey(const std::vector<u_int64_t> &startingItems, std::function<u_int64_t(u_int64_t)> operation, int divisor, int trueDestDif, int falseDestDif);
     void lookAtItems_pt1();
     void lookAtItems_pt2();
     int getNumInspected() const;
