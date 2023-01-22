@@ -14,6 +14,7 @@ public:
     CPU();
     void addx(int v);
     void noop();
+    void doCycle(const int num = 1);
     int sumStrengths();
     void printScreen();
 };

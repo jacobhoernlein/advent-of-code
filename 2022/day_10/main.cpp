@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
     CPU cpu;
     
     for (string line : getlines(argc, argv)) {
-        if (line.substr(0, 4) == "noop") cpu.noop();
+        if (line.substr(0, 4) == "noop") cpu.doCycle();
         else cpu.addx(stoi(line.substr(5)));
     }
 

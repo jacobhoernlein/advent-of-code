@@ -35,6 +35,17 @@ void CPU::noop() {
     fireCRT();
 }
 
+void CPU::doCycle(const int num) {
+    for (int i = 0; i < num; i++) {
+        strengths.push_back(cycle++ * x);
+
+        int CRTx = (cycle - 1) % 40;
+        int CRTy = (cycle - 1) / 40;
+        if (CRTx >= (x - 1) && CRTx <= (x + 1))
+            screen.at(CRTy).at(CRTx) = '#';
+    }
+}
+
 int CPU::sumStrengths() {
     int sum = 0;
     for (int i = 0; i < 6; i++) {
