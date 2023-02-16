@@ -2,6 +2,7 @@
 #include <unordered_set>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 template<typename T>
@@ -27,7 +28,7 @@ int findNonRepeating(T *begin, T *end, int s) {
 }
 
 int main(int argc, char* argv[]) {
-    string input = getlines(argc, argv).front();
+    string input = getlines(argc, argv)[0];
 
     cout << "Part 1: " << findNonRepeating(&input.front(), &input.back(), 4) + 1 << "\n";
     cout << "Part 2: " << findNonRepeating(&input.front(), &input.back(), 14) + 1 << endl;

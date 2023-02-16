@@ -3,6 +3,7 @@
 #include <sstream>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 struct Interval {

@@ -2,6 +2,7 @@
 #include <numeric>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 typedef pair<u_int64_t, u_int64_t> Point;
@@ -102,7 +103,7 @@ u_int64_t part1(const string &directions, const u_int64_t numBlocks) {
 }
 
 int main(int argc, char* argv[]) {
-    string directions = getlines(argc, argv).at(0);
+    string directions = getlines(argc, argv)[0];
 
     // cout << "Part 1: " << part1(directions, 2022) << endl;
 

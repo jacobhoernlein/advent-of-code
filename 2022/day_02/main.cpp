@@ -2,6 +2,7 @@
 #include <sstream>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 int getScore_pt1(char elf, char me) {

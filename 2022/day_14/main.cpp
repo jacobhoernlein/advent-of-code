@@ -2,6 +2,7 @@
 #include <sstream>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 void drawLines(vector<string> &map, const string &line) {

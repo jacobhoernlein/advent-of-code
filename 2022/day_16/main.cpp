@@ -3,6 +3,7 @@
 #include "valve.h"
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 int findMax_pt1(

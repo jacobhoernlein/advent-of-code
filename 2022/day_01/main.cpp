@@ -2,6 +2,7 @@
 #include <iostream>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 int main(int argc, char* argv[]) {

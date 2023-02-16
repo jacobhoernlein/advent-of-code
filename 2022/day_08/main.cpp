@@ -1,6 +1,7 @@
 #include <iostream>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 bool isVisible(const vector<vector<int>> &trees, const int i, const int j) {

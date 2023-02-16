@@ -2,6 +2,7 @@
 #include <unordered_set>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 // Number of elves per group.

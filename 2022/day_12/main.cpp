@@ -3,6 +3,7 @@
 #include "vertex.h"
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 void getGraph(vector<Vertex*> &graph, const vector<string> &lines,  Vertex* &start, Vertex* &end, char mode) {

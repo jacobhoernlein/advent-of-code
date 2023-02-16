@@ -2,6 +2,7 @@
 #include <sstream>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 void moveBoxes_pt1(vector<vector<char>> &stacks, const string &line) {

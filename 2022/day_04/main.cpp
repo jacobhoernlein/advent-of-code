@@ -2,6 +2,7 @@
 #include <sstream>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 int encapsulation(const string &s) {

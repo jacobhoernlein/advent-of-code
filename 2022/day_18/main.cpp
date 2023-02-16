@@ -3,6 +3,7 @@
 #include <queue>
 #include "jmch/getlines.h"
 
+using namespace jmch;
 using namespace std;
 
 typedef vector<vector<vector<bool>>> Map;
