@@ -7,7 +7,7 @@
 
 class Rope {
     std::vector<std::pair<int, int>> knots;
-    std::unordered_set<std::pair<int, int>, hash_pair> visitedPoints;
+    std::unordered_set<std::pair<int, int>> visitedPoints;
 public:
     Rope(int length);
     void move(char direction, int count);

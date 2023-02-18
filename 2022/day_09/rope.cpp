@@ -18,7 +18,7 @@ void moveKnot(pair<int, int> &master, pair<int, int> &slave) {
 }
 
 Rope::Rope(int length) {
-    knots = vector(length, pair(0, 0));
+    knots = vector<pair<int, int>>(length, pair<int, int>(0, 0));
 }
 
 void Rope::move(char direction, int count) {
