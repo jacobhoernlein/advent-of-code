@@ -28,16 +28,14 @@ def part_one(times: list[int], distances: list[int]) -> int:
 def part_two(times: list[int], distances: list[int]) -> int:
     """Finds the number of ways the one game can be won."""
     
-    time = int("".join([str(n) for n in times]))
-    dist = int("".join([str(n) for n in distances]))
-    
-    return get_num_ways(time, dist)
+    merge = lambda it: int("".join([str(n) for n in it]))
+    return get_num_ways(merge(times), merge(distances))
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
     with open("input.txt") as fp:
         times, distances = [
-            [int(n) for n in line[:-1].split(":")[1].split(" ") if n.isnumeric()]
+            [int(n) for n in line[:-1].split(":")[1].split(" ") if n]
             for line in fp
         ]
 
