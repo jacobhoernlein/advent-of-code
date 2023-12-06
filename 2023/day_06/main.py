@@ -8,7 +8,7 @@ def get_num_ways(time: int, dist: int) -> int:
     beat the given distance, then returns the number of times possible.
     """
     
-    sqrt_disc = sqrt(time**2 - 4*dist)  # The bit with the square root.
+    sqrt_disc = sqrt(time**2 - 4*dist)
     
     min_t = floor((time - sqrt_disc) / 2 + 1)
     max_t = ceil((time + sqrt_disc) / 2 - 1)
@@ -36,7 +36,6 @@ def part_two(times: list[int], distances: list[int]) -> int:
 if __name__ == "__main__":    
     with open("input.txt") as fp:
         times, distances = [
-            # Ugly bastard list comprehension from hell
             [int(n) for n in line[:-1].split(":")[1].split(" ") if n]
             for line in fp
         ]
