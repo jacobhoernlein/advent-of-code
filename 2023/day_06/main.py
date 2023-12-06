@@ -22,8 +22,8 @@ def get_num_ways(time: int, dist: int) -> int:
     except ValueError:  # Not enough time for given distance.
         return 0
 
-    # We use floor/ceil because we need the next largest/smallest
-    # integer for the given solution of t.
+    # We use floor/ceil and add/subtract one because we need the next
+    # largest/smallest integer for the given solution of t.
     min_t = floor((time - sqrt_disc)/2 + 1)
     max_t = ceil((time + sqrt_disc)/2 - 1)
     
@@ -43,13 +43,16 @@ def part_one(times: list[int], distances: list[int]) -> int:
 def part_two(times: list[int], distances: list[int]) -> int:
     """Finds the number of ways the one game can be won."""
     
+    # Quick function that concatenates integers in a list.
     merge = lambda it: int("".join([str(n) for n in it]))
+    
     return get_num_ways(merge(times), merge(distances))
 
 
 if __name__ == "__main__":    
     with open("input.txt") as fp:
         times, distances = [
+            # Ugly list comprehension, but all it does is parse input.
             [int(n) for n in line[:-1].split(":")[1].split(" ") if n]
             for line in fp
         ]
