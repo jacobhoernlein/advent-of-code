@@ -20,7 +20,7 @@ def part_one(times: list[int], distances: list[int]) -> int:
 
     margin = 1
 
-    for time, dist in list(zip(times, distances)):
+    for time, dist in zip(times, distances):
         margin *= get_num_ways(time, dist)
     
     return margin
