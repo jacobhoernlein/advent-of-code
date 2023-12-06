@@ -1,5 +1,6 @@
 """Day six of Advent of Code 2023."""
 
+from functools import reduce
 from math import sqrt, floor, ceil
 
 
@@ -34,11 +35,10 @@ def part_one(times: list[int], distances: list[int]) -> int:
     product.
     """
 
-    margin = 1
-    for time, dist in zip(times, distances):
-        margin *= get_num_ways(time, dist)
-    
-    return margin
+    return reduce(
+        lambda margin, num: margin * num, 
+        [get_num_ways(t, d) for t, d in zip(times, distances)]
+    )
 
 def part_two(times: list[int], distances: list[int]) -> int:
     """Finds the number of ways the one game can be won."""
