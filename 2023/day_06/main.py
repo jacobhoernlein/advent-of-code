@@ -14,7 +14,9 @@ def get_num_ways(time: int, dist: int) -> int:
     return max_t - min_t + 1
 
 def part_one(times: list[int], distances: list[int]) -> int:
-    """Finds the margin for each game and returns the product."""
+    """Finds the number of ways each game can be beat and returns the
+    product.
+    """
 
     margin = 1
 
@@ -24,7 +26,7 @@ def part_one(times: list[int], distances: list[int]) -> int:
     return margin
 
 def part_two(times: list[int], distances: list[int]) -> int:
-    """Finds the margin of one game."""
+    """Finds the number of ways the one game can be won."""
     
     time = int("".join([str(n) for n in times]))
     dist = int("".join([str(n) for n in distances]))
