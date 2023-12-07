@@ -1,0 +1,101 @@
+"""Day seven of Advent of Code 2023."""
+
+from functools import reduce
+
+
+def get_hand_rank(s: str, wild=False) -> int | float:
+    """Returns the rank of the hand based on if its wild or not, in a
+    range from 1 (high card) to 5 (five of a kind).
+    """
+    
+    # Counts cards in the hand.
+    card_count = {c: 0 for c in s}
+    for c in s:
+        card_count[c] += 1
+
+    # Returns a list with the largest number of cards first, then
+    # the next largest, and so on. For example, for a full house,
+    # the list will be [3, 2]. For a two pair it will be [2, 2, 1]
+    # and so on. We exclude jokers at first, because we treat
+    # ranking differently based on if the hand is wild.
+    count_list = sorted(
+        [v for k, v in card_count.items() if k != "J" and v > 0], 
+        reverse=True
+    )
+
+    try:
+        if wild:    
+            # Add jokers to highest count.
+            count_list[0] += card_count["J"]
+        else:       
+            # Add jokers back in and sort again.
+            count_list.append(card_count["J"])
+            count_list.sort(reverse=True)
+    except IndexError:  # Wild and all jokers.
+        return 5
+    except KeyError:    # No jokers.
+        pass
+
+    # The hand is a two pair or a full house.
+    if count_list[0] in (2, 3) and count_list[1] > 1:
+        count_list[0] += 0.5
+
+    return count_list[0]
+
+
+STRENGTHS = {
+    "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8,
+    "9": 9, "T": 10, "J": 11, "Q": 12, "K": 13, "A": 14
+}
+
+STRENGTHS_WILD = {
+    "J": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, 
+    "8": 8, "9": 9, "T": 10, "Q": 12, "K": 13, "A": 14
+}
+
+class Hand:
+
+    def __init__(self, s: str, wild=False):
+        self.hand_rank = get_hand_rank(s, wild)
+
+        strengths = STRENGTHS_WILD if wild else STRENGTHS
+        self.strengths = [strengths[c] for c in s]
+
+    def __lt__(self, other: "Hand"):
+        
+        # If types aren't the same, compare by that.
+        if self.hand_rank != other.hand_rank:
+            return self.hand_rank < other.hand_rank
+        
+        # Compare card by card if types are the same.
+        for s, o in zip(self.strengths, other.strengths):
+            if s != o:
+                return s < o
+        
+        return False
+
+
+def get_winnings(split_lines: list[tuple[str, str]], wild=False) -> int:
+    """Gets the total winnings for a game based on whether the hands
+    should be treated as wild or not.
+    """
+
+    # Creates a list of tuples pairing hands to their bids.
+    hands_bids = [(Hand(h, wild), int(b)) for h, b in split_lines]
+    
+    # Sorts the list based on the rank of the hand.
+    hands_bids.sort(key=lambda k: k[0])
+
+    # Returns the sum of the products of a hand's rank and its bid.
+    return reduce(
+        lambda t, x: t + x,
+        [(i + 1) * hb[1] for i, hb in enumerate(hands_bids)]
+    )
+
+
+if __name__ == "__main__":    
+    with open("/home/jacob/git/adventofcode/2023/day_07/input.txt") as fp:
+        split_lines = [line[:-1].split(" ") for line in fp]
+
+    print("Part One:", get_winnings(split_lines))
+    print("Part Two:", get_winnings(split_lines, wild=True))

@@ -25,8 +25,8 @@ def get_num_ways(time: int, dist: int) -> int:
 
     # We use floor/ceil and add/subtract one because we need the next
     # largest/smallest integer for the given solution of t.
-    min_t = floor((time - sqrt_disc)/2 + 1)
-    max_t = ceil((time + sqrt_disc)/2 - 1)
+    min_t = floor((time - sqrt_disc) / 2) + 1
+    max_t = ceil((time + sqrt_disc) / 2) - 1
     
     return max_t - min_t + 1 if max_t >= min_t else 0
 
