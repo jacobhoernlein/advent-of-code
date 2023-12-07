@@ -16,12 +16,16 @@ class Hand:
 
     def __init__(self, s: str, wild=False):
         self.type = Hand.__get_type(s, wild)
+        self.s = s
 
         # Updates the strength of a joker if the hand is wild or not,
         # then translates each character in the string to an integer
         # value representing its relative weight.
         Hand.__card_strengths["J"] = 1 if wild else 11
         self.__card_strengths = [Hand.__card_strengths[c] for c in s]
+
+    def __repr__(self):        
+        return f'Hand("{self.s}")'
 
     def __lt__(self, other: "Hand"):
         """Compares hands first based on their type, then on individual
