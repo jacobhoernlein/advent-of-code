@@ -3,9 +3,9 @@
 from functools import reduce
 
 
-def get_hand_rank(s: str, wild=False) -> int | float:
-    """Returns the rank of the hand based on if its wild or not, in a
-    range from 1 (high card) to 5 (five of a kind).
+def get_type(s: str, wild=False) -> int | float:
+    """Returns the strength of the hand's type as a number, based on if
+    it's wild or not, in a range from 1 (high card) to 5 (five of a kind).
     """
     
     # Counts cards in the hand.
@@ -37,7 +37,7 @@ def get_hand_rank(s: str, wild=False) -> int | float:
         pass
 
     # The hand is a two pair or a full house.
-    if count_list[0] in (2, 3) and count_list[1] > 1:
+    if count_list[0] in (2, 3) and count_list[1] == 2:
         count_list[0] += 0.5
 
     return count_list[0]
@@ -56,21 +56,25 @@ STRENGTHS_WILD = {
 class Hand:
 
     def __init__(self, s: str, wild=False):
-        self.hand_rank = get_hand_rank(s, wild)
+        self.type = get_type(s, wild)
 
+        # Translates each character in the string to an integer value
+        # representing its relative weight using the appropriate
+        # dictionary.
         strengths = STRENGTHS_WILD if wild else STRENGTHS
-        self.strengths = [strengths[c] for c in s]
+        self.cards = [strengths[c] for c in s]
 
     def __lt__(self, other: "Hand"):
+        """Compares hands first based on their type, then on individual
+        cards.
+        """
+
+        if self.type != other.type:
+            return self.type < other.type
         
-        # If types aren't the same, compare by that.
-        if self.hand_rank != other.hand_rank:
-            return self.hand_rank < other.hand_rank
-        
-        # Compare card by card if types are the same.
-        for s, o in zip(self.strengths, other.strengths):
-            if s != o:
-                return s < o
+        for a, b in zip(self.cards, other.cards):
+            if a != b:
+                return a < b
         
         return False
 
@@ -80,13 +84,8 @@ def get_winnings(split_lines: list[tuple[str, str]], wild=False) -> int:
     should be treated as wild or not.
     """
 
-    # Creates a list of tuples pairing hands to their bids.
-    hands_bids = [(Hand(h, wild), int(b)) for h, b in split_lines]
-    
-    # Sorts the list based on the rank of the hand.
-    hands_bids.sort(key=lambda k: k[0])
+    hands_bids = sorted([(Hand(h, wild), int(b)) for h, b in split_lines])
 
-    # Returns the sum of the products of a hand's rank and its bid.
     return reduce(
         lambda t, x: t + x,
         [(i + 1) * hb[1] for i, hb in enumerate(hands_bids)]
