@@ -8,15 +8,15 @@ from math import gcd
 Map = dict[str, tuple[str, str]]
 
 
-def steps_to_z(start: str, instructions: str, map: Map) -> int:
+def steps_to_z(cur: str, instructions: str, map: Map) -> int:
     """Returns the number of steps it takes to get to something ending
     in Z from the given start location.
     """
     
-    for steps, instruction in enumerate(cycle(instructions)):
-        if start[-1] == 'Z':
+    for steps, n in enumerate(cycle(instructions)):
+        if cur[-1] == 'Z':
             return steps
-        start = map[start][0] if instruction == 'L' else map[start][1]
+        cur = map[cur][0] if n == 'L' else map[cur][1]
 
 def part_one(instructions: str, map: Map) -> int:
     """Returns the steps to get to something ending with Z from AAA. It
