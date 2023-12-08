@@ -27,8 +27,13 @@ if __name__ == "__main__":
 
     # Finds every starting position ending in A and computes the time
     # that it takes to get to something ending in Z.
-    starts = [s for s in map.keys() if s[-1] == 'A']
-    steps = {s: steps_to_z(s, instructions, map) for s in starts}
+    steps = {
+        s: steps_to_z(s, instructions, map)
+        for s in map.keys()
+        if s[-1] == 'A'
+    }
+
+    print("Part One:", steps["AAA"])
 
     # It turns out that the paths are perfectly cyclic, so it takes the
     # same amount of steps to get to something ending in Z again.
@@ -40,5 +45,4 @@ if __name__ == "__main__":
         steps.values()
     )
 
-    print("Part One:", steps["AAA"])
     print("Part Two:", lcm)
