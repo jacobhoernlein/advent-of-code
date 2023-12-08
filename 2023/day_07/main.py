@@ -1,7 +1,5 @@
 """Day seven of Advent of Code 2023."""
 
-from functools import reduce
-
 
 class Hand:
     """Class representing a hand of Camel Poker cards. Constructed with
@@ -14,9 +12,10 @@ class Hand:
         "9": 9, "T": 10, "J": 11, "Q": 12, "K": 13, "A": 14
     }
 
-    def __init__(self, s: str, wild=False):
+    def __init__(self, s: str, bid=0, wild=False):
         self.type = Hand.__get_type(s, wild)
         self.s = s
+        self.bid = bid
 
         # Updates the strength of a joker if the hand is wild or not,
         # then translates each character in the string to an integer
@@ -52,15 +51,13 @@ class Hand:
         for c in s:
             card_count[c] += 1
 
-        # Returns a list with the largest number of cards first, then
-        # the next largest, and so on. For example, for a full house,
-        # the list will be [3, 2]. For a two pair it will be [2, 2, 1]
-        # and so on. We exclude jokers at first, because we treat
-        # ranking differently based on if the hand is wild.
-        count_list = sorted(
-            [v for k, v in card_count.items() if k != "J" and v > 0], 
-            reverse=True
-        )
+        # Makes a list with the largest number of cards first, then the
+        # next largest, and so on. For example, for a full house, the 
+        # list will be [3, 2]. For a two pair it will be [2, 2, 1] and
+        # so on. We exclude jokers at first, because we treat ranking 
+        # differently based on if the hand is wild.
+        count_list = [v for k, v in card_count.items() if k != "J" and v > 0]
+        count_list.sort(reverse=True)
 
         try:
             if wild:    
@@ -82,22 +79,21 @@ class Hand:
         return count_list[0]
 
 
-def get_winnings(split_lines: list[tuple[str, str]], wild=False) -> int:
+def get_winnings(lines: list[str], wild=False) -> int:
     """Gets the total winnings for a game based on whether the hands
     should be treated as wild or not.
     """
 
-    hands_bids = sorted([(Hand(h, wild), int(b)) for h, b in split_lines])
+    hands = [Hand(line[:5], int(line[6:]), wild) for line in lines]
+    hands.sort()
 
-    return reduce(
-        lambda t, x: t + x,
-        [(i + 1) * hb[1] for i, hb in enumerate(hands_bids)]
-    )
+    winnings = [(i + 1) * hand.bid for i, hand in enumerate(hands)]
+    return sum(winnings)
 
 
 if __name__ == "__main__":    
-    with open("/home/jacob/git/adventofcode/2023/day_07/input.txt") as fp:
-        split_lines = [line[:-1].split(" ") for line in fp]
+    with open("input.txt") as fp:
+        lines = fp.readlines()
 
-    print("Part One:", get_winnings(split_lines))
-    print("Part Two:", get_winnings(split_lines, wild=True))
+    print("Part One:", get_winnings(lines))
+    print("Part Two:", get_winnings(lines, wild=True))
