@@ -1,6 +1,7 @@
 """Day eight of Advent of Code 2023."""
 
 from functools import reduce
+from itertools import cycle
 from math import gcd
 
 
@@ -12,24 +13,10 @@ def steps_to_z(start: str, instructions: str, map: Map) -> int:
     in Z from the given start location.
     """
     
-    steps = 0
-    instruct_iter = iter(instructions)
-
-    while start[-1] != 'Z':
-        try:
-            n = next(instruct_iter)
-        except StopIteration:
-            instruct_iter = iter(instructions)
-            continue
-
-        if n == 'L':
-            start = map[start][0]
-        else:
-            start = map[start][1]
-
-        steps += 1
-
-    return steps
+    for steps, instruction in enumerate(cycle(instructions)):
+        if start[-1] == 'Z':
+            return steps
+        start = map[start][0] if instruction == 'L' else map[start][1]
 
 def part_one(instructions: str, map: Map) -> int:
     """Returns the steps to get to something ending with Z from AAA. It
@@ -58,7 +45,7 @@ def part_two(instructions: str, map: Map) -> int:
 
 
 if __name__ == "__main__":
-    with open("/home/jacob/git/adventofcode/2023/day_08/input.txt") as fp:
+    with open("input.txt") as fp:
         instructions = fp.readline()[:-1]
         fp.readline() # Ignore empty line.
 

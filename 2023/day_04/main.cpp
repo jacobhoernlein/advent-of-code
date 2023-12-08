@@ -1,10 +1,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <numeric>
 #include <sstream>
-#include <set>
-#include <vector>
 
 #include "jmch/getlines.h"
 
@@ -37,21 +34,23 @@ int getNumWon(const string& line) {
 }
 
 int main(int argc, char** argv) {
-    auto lines = jmch::getlines(argc, argv);
+    int part1 = 0, part2 = 0, matching;
 
-    int part1 = 0;
-    vector<int> part2(lines.length(), 1);
+    auto lines = jmch::getlines(argc, argv);
+    vector<int> counts(lines.length(), 1);
 
     for (int i = 0; i < lines.length(); i++) {
-        int matching = getNumWon(lines[i]);
+        matching = getNumWon(lines[i]);
+        
         part1 += 1 << (matching - 1);
+        part2 += counts[i];
 
         for (int j = 0; j < matching; j++) 
-            part2[i + j + 1] += part2[i];
+            counts[i + j + 1] += counts[i];
     }
 
     cout << "Part One: " << part1 << endl;
-    cout << "Part Two: " << accumulate(part2.begin(), part2.end(), 0) << endl;
+    cout << "Part Two: " << part2 << endl;
 
     return 0;
 }
