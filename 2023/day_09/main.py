@@ -5,9 +5,10 @@ from numpy import diff
 
 
 def get_predictions(l: list[int]):
-    """First creates the list of diffs until it gets to the list with
-    all 0s. Then accumulates either the sums of the last elements or the 
-    differences of the previous elements in order to predict a value.
+    """First creates the list of differences until it gets to the list
+    with all 0s. Then finds the previous element by accumulating the
+    differences of the first elements, and finds the next element by
+    accumulating the sums of the last elements.
     """
     
     lists = [l.copy()]
