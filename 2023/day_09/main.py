@@ -15,7 +15,7 @@ def get_prediction(l: list[int], get_next=True):
         lists.append(list(diff(lists[-1])))
  
     return reduce(
-        lambda n, l: l[-1 if get_next else 0] + (n if get_next else -n),
+        lambda n, l: (l[-1] + n) if get_next else (l[0] - n),
         reversed(lists[:-1]),
         0
     )
