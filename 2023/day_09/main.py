@@ -4,7 +4,7 @@ from functools import reduce
 from numpy import diff
 
 
-def get_predictions(l: list[int]):
+def get_predictions(l: list[int]) -> tuple[int, int]:
     """First creates the list of differences until it gets to the list
     with all 0s. Then finds the previous element by accumulating the
     differences of the first elements, and finds the next element by
