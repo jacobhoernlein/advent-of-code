@@ -4,7 +4,7 @@ from functools import reduce
 from numpy import diff
 
 
-def get_prediction(l: list[int], get_next=True):
+def get_predictions(l: list[int]):
     """First creates the list of diffs until it gets to the list with
     all 0s. Then accumulates either the sums of the last elements or the 
     differences of the previous elements in order to predict a value.
@@ -13,20 +13,12 @@ def get_prediction(l: list[int], get_next=True):
     lists = [l.copy()]
     while not all(e == 0 for e in lists[-1]):
         lists.append(list(diff(lists[-1])))
- 
-    return reduce(
-        lambda n, l: (l[-1] + n) if get_next else (l[0] - n),
-        reversed(lists[:-1]),
-        0
-    )
+    lists.reverse()
 
-def analyze_report(lists: list[int], get_next=True):
-    """Analyze the report by finding the predicted previous or next
-    values, then returning their sum.
-    """
-
-    predictions = [get_prediction(l, get_next) for l in lists]
-    return sum(predictions)
+    p = reduce(lambda n, l: l[0] - n, lists, 0)
+    n = reduce(lambda n, l: l[-1] + n, lists, 0)
+    
+    return p, n
 
 
 if __name__ == "__main__":
@@ -35,6 +27,9 @@ if __name__ == "__main__":
             [int(n) for n in line.split() if n.lstrip('-').isnumeric()]
             for line in fp
         ]
+        
+    predictions = [get_predictions(l) for l in lists]
+    prevs, nexts = zip(*predictions)
 
-    print("Part One:", analyze_report(lists))
-    print("Part Two:", analyze_report(lists, False))
+    print("Part One:", sum(nexts))
+    print("Part Two:", sum(prevs))
