@@ -23,7 +23,7 @@ def get_predictions(l: list[int]) -> tuple[int, int]:
 
 
 if __name__ == "__main__":
-    with open("input.txt") as fp:
+    with open("/home/ubuntu/git/adventofcode/2023/day_09/input.txt") as fp:
         lists = [
             [int(n) for n in line.split() if n.lstrip('-').isnumeric()]
             for line in fp
